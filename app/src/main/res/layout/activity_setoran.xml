@@ -9,6 +9,7 @@
     android:padding="16dp"
     tools:context=".ui.setoran.SetoranActivity">
 
+    <!-- Judul Utama -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,17 +18,32 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
+    <!-- RecyclerView untuk Daftar Setoran -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSetoran"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        tools:listitem="@layout/item_setoran" /> <Button
-    android:id="@+id/buttonSimpanSetoran"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="16dp"
-    android:text="Simpan Setoran"/>
+        tools:listitem="@layout/item_setoran" />
+
+    <!-- TextView Baru: SIMPAN SETORAN -->
+    <TextView
+        android:id="@+id/tvSimpanSetoran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIMPAN SETORAN"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Tombol Aksi -->
+    <Button
+        android:id="@+id/buttonSimpanSetoran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Simpan"/>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 // Data class untuk response dari endpoint GET userinfo Keycloak
 data class UserInfoData(
+    val preferred_username: String,
     val sub: String,
     @SerializedName("email_verified") val emailVerified: Boolean,
     val name: String,

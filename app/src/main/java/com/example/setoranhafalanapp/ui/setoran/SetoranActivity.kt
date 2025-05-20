@@ -55,7 +55,7 @@ class SetoranActivity : AppCompatActivity() {
 
         // TODO: Ambil token dan API Key dari penyimpanan lokal (misalnya SharedPreferences)
         val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
-        val apiKey = "YOUR_API_KEY" // Ganti dengan API Key Anda yang sebenarnya
+        val apiKey = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVTUhSdlYzR1FjU0YzRWpsZmdtb0dETEpsWGZqOVBpZTdiWWVuNUxLRFZvIn0.eyJleHAiOjE3NDc3MjQzNjUsImlhdCI6MTc0NzcyMzQ2NSwianRpIjoib25ydHJvOmQ5YjgxODQ1LWIwYjgtNDU0Yy1iNjM1LTI2NzFhZDVmODI4NyIsImlzcyI6Imh0dHBzOi8vaWQudGlmLnVpbi1zdXNrYS5hYy5pZC9yZWFsbXMvZGV2Iiwic3ViIjoiZWFmOTNhMjQtYjQzNi00MDRhLTgwMTEtYTRhZmU2MDM4MzQ3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2V0b3Jhbi1tb2JpbGUtZGV2Iiwic2lkIjoiZjZjZDk5YmMtOWJkMi00YzM0LWFhMjUtM2YwYWJlYWZlNjE4IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJtYWhhc2lzd2EiXX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHJvbGVzIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik5JU0hBIFJBSE1BRElOSSBTWUFIREEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiIxMjM1MDEyMTM2NiIsImdpdmVuX25hbWUiOiJOSVNIQSBSQUhNQURJTkkiLCJmYW1pbHlfbmFtZSI6IlNZQUhEQSIsImVtYWlsIjoiMTIzNTAxMjEzNjZAc3R1ZGVudHMudWluLXN1c2thLmFjLmlkIn0.Axgu7oOPV5z6OEMVino2q0aSmjDsojskCmPUNblPjNf4VqhCHH3b5o5XJzAc7aC498JiUHrmYahhdna_K1hyXwjydb1s4N7woRT7OqX-XlVGkq4zF89X6A8hUBTXPdh8otATQjXzLAbiDY6oe6yVoB7D3WhPYmqL3HGI0dTOkv8IBWBuEymgT3x76uzbxP5mTTJ2xdyZRxEEW1TpET5HOk4vEPRFfUXxEsaNS-qQPVGDubmRSrf8Dnie0kjsse8flvXvdWOecdaDIaFQ9fUUi9q0vA7FVdOj6N5GrzKSRANxNc5pdmU_jbzUyXssJzFZG-11GlI62STylkCMoCREcQ" // Ganti dengan API Key Anda yang sebenarnya
         val authToken = sharedPref.getString("access_token", null) // Ambil access token yang disimpan setelah login
 
         // TODO: Ambil NIM mahasiswa. Ini bisa didapat dari berbagai sumber:
@@ -64,11 +64,15 @@ class SetoranActivity : AppCompatActivity() {
         // 2. Dari data profil pengguna yang disimpan setelah login
         //    val nimMahasiswa = sharedPref.getString("user_nim", null)
         // 3. Atau jika hanya untuk 1 user, hardcode dulu untuk testing (TIDAK DISARANKAN UNTUK APLIKASI NYATA)
-        val nimMahasiswa = "12350114004" // Contoh NIM, GANTI DENGAN LOGIKA AMBIL NIM ASLI
+        val nimMahasiswa = sharedPref.getString("user_nim", null)
+        // Contoh NIM, GANTI DENGAN LOGIKA AMBIL NIM ASLI
 
         // ==============================================================
         // Tahap 8: Lakukan panggilan API untuk mendapatkan data setoran saat Activity dibuat
         if (authToken != null && nimMahasiswa != null) {
+            Log.d("DEBUG", "Token: Bearer $authToken")
+            Log.d("DEBUG", "NIM: $nimMahasiswa")
+            Log.d("DEBUG", "API KEY: $apiKey")
             getSetoranMahasiswa(nimMahasiswa, apiKey, authToken)
         } else {
             Toast.makeText(this, "Anda belum login atau NIM tidak tersedia", Toast.LENGTH_SHORT).show()

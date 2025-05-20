@@ -15,6 +15,7 @@ import com.example.setoranhafalanapp.databinding.ActivityLoginBinding
 // ==============================================================
 import android.content.Intent // Untuk navigasi antar Activity
 import com.example.setoranhafalanapp.ui.main.MainActivity // Target navigasi setelah login
+import com.example.setoranhafalanapp.model.UserInfoData
 
 class LoginActivity : AppCompatActivity() {
 
@@ -78,28 +79,33 @@ class LoginActivity : AppCompatActivity() {
                                 // Login sukses!
                                 Log.d("LoginActivity", "Login Sukses: ${loginResponse.accessToken}")
 
-                                // ==============================================================
-                                // Tahap 7: Simpan accessToken dan refreshToken dengan aman
-                                // Gunakan SharedPreferences atau DataStore untuk menyimpan token
+                                // 🔁 Ambil informasi user dari token (endpoint /userinfo)
+                                val userInfoResponse = RetrofitClient.kcAuthService.getUserInfo("Bearer ${loginResponse.accessToken}")
+                                val userInfo = userInfoResponse.body()
+
+                                // ✅ Ambil preferred_username sebagai NIM user dari token
+                                val nimFromToken = userInfo?.preferred_username ?: username
+
+                                // 💾 Simpan token & NIM ke SharedPreferences
                                 val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
                                 with (sharedPref.edit()) {
                                     putString("access_token", loginResponse.accessToken)
                                     putString("refresh_token", loginResponse.refreshToken)
-                                    // Anda mungkin juga ingin menyimpan informasi user lainnya
-                                    // putString("username", username) // Contoh menyimpan username
-                                    apply() // Gunakan apply() untuk menyimpan secara asynchronous
+                                    putString("user_nim", nimFromToken)
+                                    apply()
                                 }
-                                // ==============================================================
+
+                                Log.d("LoginActivity", "NIM dari token: $nimFromToken")
 
                                 Toast.makeText(this@LoginActivity, "Login Berhasil!", Toast.LENGTH_SHORT).show()
 
-                                // ==============================================================
-                                // Tahap 7: Navigasi ke Activity berikutnya (MainActivity)
+                                // ➡️ Navigasi ke MainActivity
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                // Opsional: Tambahkan flag agar pengguna tidak bisa kembali ke layar login dengan tombol back
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
-                                finish() // Tutup LoginActivity
+                                finish()
+                            }
+                            // Tutup LoginActivity
                                 // ==============================================================
 
                             } else {
