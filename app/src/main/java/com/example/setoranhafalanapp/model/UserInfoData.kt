@@ -2,15 +2,22 @@ package com.example.setoranhafalanapp.model
 
 import com.google.gson.annotations.SerializedName
 
-// Data class untuk response dari endpoint GET userinfo Keycloak
 data class UserInfoData(
-    val preferred_username: String,
-    val sub: String,
-    @SerializedName("email_verified") val emailVerified: Boolean,
+    @SerializedName("email_verified")
+    val emailVerified: Boolean,
+
+    @SerializedName("name")
     val name: String,
-    @SerializedName("preferred_username") val preferredUsername: String,
-    @SerializedName("given_name") val givenName: String,
-    @SerializedName("family_name") val familyName: String,
+
+    @SerializedName("preferred_username")
+    val preferredUsername: String,
+
+    @SerializedName("given_name")
+    val givenName: String,
+
+    @SerializedName("family_name")
+    val familyName: String,
+
+    @SerializedName("email")
     val email: String
-    // ... tambahkan field lain jika ada di response JSON
 )
